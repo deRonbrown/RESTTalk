@@ -5,11 +5,7 @@ class RESTTalk < Sinatra::Application
 
     # Response object
     @talkResponse = TalkResponse.new request.path
-    
-    # Return object limit
-    @numLimit = 100
-    @talkResponse.resultsPerQuery = @numLimit
-    
+        
     # Params added by :id to be ignored
     @removeSPI = ["splat", "captures", "id"]
         
@@ -19,3 +15,4 @@ class RESTTalk < Sinatra::Application
 end
 
 require_relative 'main'
+require_relative 'things'
