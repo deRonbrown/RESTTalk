@@ -16,3 +16,4 @@ end
 
 require_relative 'main'
 require_relative 'things'
+require_relative 'items'
