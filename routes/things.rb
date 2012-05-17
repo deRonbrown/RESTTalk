@@ -131,4 +131,32 @@ class RESTTalk < Sinatra::Application
     @talkResponse.to_response
   end
   
+  delete '/thing/:id/?' do
+    
+    thing = Thing.get(params[:id])
+    if thing.nil?
+      @talkResponse.add_error :type => "Not_Found", :message => "No Thing found with id = #{params[:id]}"
+    end
+    
+    if not @talkResponse.is_error?
+      @talkResponse.result = [thing.as_json()].map{|jsonObj| jsonObj.reject{|k,v| v.nil?}}
+      
+      items = Item.all(:thing_id => thing.id)
+      
+      if not thing.destroy!
+        @talkResponse.add_error :type => "Delete_Failed", :message => "Thing with id = #{thing.id} failed to delete"
+      else
+        
+        # remove thing reference
+        items.each { |i|
+          i.thing_id = nil
+          i.save
+        }
+        
+      end
+    end
+    
+    @talkResponse.to_response
+  end
+  
 end
