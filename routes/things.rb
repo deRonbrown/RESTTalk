@@ -39,5 +39,17 @@ class RESTTalk < Sinatra::Application
     @talkResponse.to_response
   end
   
+  get '/thing/:id/items/?' do
+    
+    query_string = "thing_id=#{params[:id]}&"
+    
+    # remove splat, captures, and id params
+    @removeSPI.each {|n| params.delete(n)}
+
+    # build rest of query string
+    params.each {|key, value| query_string += "#{key}=#{value}&"}
+    
+    call env.merge("PATH_INFO" => "/items", "QUERY_STRING" => query_string)
+  end
   
 end
