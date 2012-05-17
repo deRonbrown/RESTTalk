@@ -1,0 +1,12 @@
+.bundle
+vendor
+*.swp
+*.iml
+.idea
+dev
+*.sql
+*~
+*.sqlite3
+.DS_Store
+log/*.log
+public/binaries/
